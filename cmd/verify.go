@@ -41,8 +41,6 @@ var verifyCmd = &cobra.Command{
 		token := vip.GetString("token")
 		publicKeyFile := vip.GetString("pubkey")
 
-		log.Println("use public key: ", publicKeyFile)
-
 		// verify token
 		parseToken, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
 			// read pem file
