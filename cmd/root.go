@@ -23,6 +23,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -30,6 +31,10 @@ import (
 )
 
 var cfgFile string
+
+// A list of viper instances to keep track of suboptions with the same name but
+// different meaning.
+var vipers = make(map[string]*viper.Viper)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -62,6 +67,13 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	vip := viper.New()
+	vipers["root"] = vip
+
+	if err := vip.BindPFlags(rootCmd.PersistentFlags()); err != nil {
+		log.Fatal(err)
+	}
 }
 
 // initConfig reads in config file and ENV variables if set.
