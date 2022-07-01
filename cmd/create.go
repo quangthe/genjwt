@@ -32,18 +32,15 @@ import (
 	"github.com/spf13/viper"
 )
 
-// tokenCmd represents the token command
-var tokenCmd = &cobra.Command{
-	Use:   "token",
+// createCmd represents the create command
+var createCmd = &cobra.Command{
+	Use:   "create",
 	Short: "Generate JWT token with custom claims",
 	Long:  `Generate JWT token with custom claims. Private key support: RSA private key`,
 	Run: func(cmd *cobra.Command, args []string) {
-		vip := vipers["token"]
+		vip := vipers["create"]
 		claimFile := vip.GetString("claims")
 		privateKeyFile := vip.GetString("privkey")
-
-		log.Println("Claims: ", claimFile)
-		log.Println("Private Key: ", privateKeyFile)
 
 		payload, err := os.ReadFile(claimFile)
 		if err != nil {
@@ -57,9 +54,9 @@ var tokenCmd = &cobra.Command{
 
 		token, err := JwtToken(payload, privateKey)
 		if err != nil {
-			fmt.Printf("Failed to create token")
+			fmt.Printf("failed to create token")
 		} else {
-			fmt.Printf("Token: %s\n", token)
+			fmt.Printf("%s\n", token)
 		}
 	},
 }
@@ -87,15 +84,15 @@ func JwtToken(payload, privKey []byte) (string, error) {
 }
 
 func init() {
-	rootCmd.AddCommand(tokenCmd)
+	rootCmd.AddCommand(createCmd)
 
-	tokenCmd.PersistentFlags().StringP("claims", "c", "", "A path to customs claims file")
-	tokenCmd.PersistentFlags().StringP("privkey", "k", "", "A path to RSA private key (PEM format)")
+	createCmd.PersistentFlags().StringP("claims", "c", "", "A path to customs claims file")
+	createCmd.PersistentFlags().StringP("privkey", "k", "", "A path to RSA private key (PEM format)")
 
 	vip := viper.New()
-	vipers["token"] = vip
+	vipers["create"] = vip
 
-	if err := vip.BindPFlags(tokenCmd.PersistentFlags()); err != nil {
+	if err := vip.BindPFlags(createCmd.PersistentFlags()); err != nil {
 		log.Fatal(err)
 	}
 }
