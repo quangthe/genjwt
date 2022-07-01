@@ -17,6 +17,18 @@ Custom payload in token. Example `default/claims.json`
 }
 ```
 
+Set expire time for token
+
+```json
+{
+  "role": "admin",
+  // get epoch number from https://www.epochconverter.com/
+  "exp": 1656656742
+}
+```
+
+For more claims, see [https://datatracker.ietf.org/doc/html/rfc7519#section-4](https://datatracker.ietf.org/doc/html/rfc7519#section-4)
+
 ## RSA key pair
 
 Generate private key: `openssl genrsa -out private-key.pem 2048`

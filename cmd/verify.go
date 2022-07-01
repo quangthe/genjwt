@@ -69,9 +69,9 @@ var verifyCmd = &cobra.Command{
 		} else if ve, ok := err.(*jwt.ValidationError); ok {
 			switch {
 			case ve.Errors&jwt.ValidationErrorMalformed != 0:
-				fmt.Println("that's not even a token")
+				fmt.Println("invalid token format")
 			case ve.Errors&(jwt.ValidationErrorExpired|jwt.ValidationErrorNotValidYet) != 0:
-				fmt.Println("timing is everything")
+				fmt.Println("token is expired")
 			default:
 				fmt.Println("cannot handle this token:", err)
 			}
