@@ -6,11 +6,11 @@ help:
 .DEFAULT_GOAL := help
 
 
-gr-build-only: ## Go Releaser: Build only
-	goreleaser build --rm-dist
-
-gr-release-dry-run: ## Go Releaser: Release dry-run
-	goreleaser release --skip-publish --rm-dist
+gr-build-only: ## Go Releaser: Build (snapshot) only
+	goreleaser build --snapshot --rm-dist
 
 gr-release-snapshot-dry-run: ## Go Releaser: Release snapshot dry-run
 	goreleaser release --skip-publish --rm-dist --snapshot
+
+gr-release-dry-run: ## Go Releaser: Release dry-run (required tag)
+	goreleaser release --skip-publish --rm-dist
