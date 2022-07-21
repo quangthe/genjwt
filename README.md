@@ -38,17 +38,17 @@ Generate public key: `openssl rsa -in private-key.pem -pubout -out public-key.pe
 ## Quick start
 
 ```
-$ openssl genrsa -out private-key.pem 2048
-$ openssl rsa -in private-key.pem -pubout -out public-key.pem
+$ openssl genrsa -out default/private-key.pem 2048
+$ openssl rsa -in default/private-key.pem -pubout -out default/public-key.pem
 
 $ go build
 
-$ ./genjwt create -c default/claims.json -k private-key.pem
+$ ./genjwt create -c default/claims.json -k default/private-key.pem
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.TAb8b67hoLZmKJ5w1DSX47yCpNnSVZItlepkGqWaNDmJIOK1p7ixqZkJFeFUNpo5ZFtP5fdkiZ9BUdlxwSnvuNJVG93mU8-RdQ2hIJGRtD0ugocO2JM3uXQdGZt5q0OHkmL9KN-704gYHkbCK_3kHJbdQ2HROrLxVkpX8rfn0wVeAQ57VKC__6aVVRZUKMxjjWMj_RtEqZ7f2QuNFw6M7n5uzzRhwEJy2DzxFbhCb7cZxkuIVPQx4qOu3SJQH9QnKyacoRWVkRAcVcqS3JCJZ9Qy_ZJqYEYR9qlzdu_amO7p21g2mEXbgeUtO1T_iZn1AnM1P4FCXK18TGzOUVYUfDhtywPvR5MYVEc5pFLGGLmOtKPSNHiNAE6og8LBvHWy-LVVyMZnf6UtodOyJkZeicMS1lMGEbxv3MjdcoEMMdPiVdB7Uytmd9J4CYoEI6ZOW-o_OZMo74ZHk6MlTSj8X_lXV59RuwBzYa3FNrtDRARMuS44_VbGWOD40TvDNFYHGXdtoypQgK_br7cAxHe-Dnzfx76Eyz77OyG7t-3mv_eCvvaYZbXrvijDBJ4Haz7iZ3wBCJ3PUFROsL-oUaCTxqJiQQLlVnMOgrq4AOdxqiud1l6mbbLzEqRqjThNwGzNmmg4E1ybudenrk5gRT-M3IPFoVJYviYmnAjvDuoVhQA
 
 $ TOKEN=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.TAb8b67hoLZmKJ5w1DSX47yCpNnSVZItlepkGqWaNDmJIOK1p7ixqZkJFeFUNpo5ZFtP5fdkiZ9BUdlxwSnvuNJVG93mU8-RdQ2hIJGRtD0ugocO2JM3uXQdGZt5q0OHkmL9KN-704gYHkbCK_3kHJbdQ2HROrLxVkpX8rfn0wVeAQ57VKC__6aVVRZUKMxjjWMj_RtEqZ7f2QuNFw6M7n5uzzRhwEJy2DzxFbhCb7cZxkuIVPQx4qOu3SJQH9QnKyacoRWVkRAcVcqS3JCJZ9Qy_ZJqYEYR9qlzdu_amO7p21g2mEXbgeUtO1T_iZn1AnM1P4FCXK18TGzOUVYUfDhtywPvR5MYVEc5pFLGGLmOtKPSNHiNAE6og8LBvHWy-LVVyMZnf6UtodOyJkZeicMS1lMGEbxv3MjdcoEMMdPiVdB7Uytmd9J4CYoEI6ZOW-o_OZMo74ZHk6MlTSj8X_lXV59RuwBzYa3FNrtDRARMuS44_VbGWOD40TvDNFYHGXdtoypQgK_br7cAxHe-Dnzfx76Eyz77OyG7t-3mv_eCvvaYZbXrvijDBJ4Haz7iZ3wBCJ3PUFROsL-oUaCTxqJiQQLlVnMOgrq4AOdxqiud1l6mbbLzEqRqjThNwGzNmmg4E1ybudenrk5gRT-M3IPFoVJYviYmnAjvDuoVhQA
 
-$ ./genjwt verify -t $TOKEN -k public-key.pem
+$ ./genjwt verify -t $TOKEN -k default/public-key.pem
 token is valid
 ===== token:
 header:  map[alg:RS256 typ:JWT]
