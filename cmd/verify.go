@@ -36,7 +36,7 @@ var verifyCmd = &cobra.Command{
 	Use:   "verify",
 	Short: "Verify a JWT token",
 	Long:  ``,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		vip := vipers["verify"]
 		token := vip.GetString("token")
 		publicKeyFile := vip.GetString("pubkey")
@@ -46,13 +46,15 @@ var verifyCmd = &cobra.Command{
 			// read pem file
 			keyPem, err := os.ReadFile(publicKeyFile)
 			if err != nil {
-				log.Fatal(err)
+				log.Printf("%v", err)
+				return nil, err
 			}
 
 			// convert to rsa key
 			pub, err := jwt.ParseRSAPublicKeyFromPEM(keyPem)
 			if err != nil {
-				log.Fatal(err)
+				log.Printf("%v", err)
+				return nil, err
 			}
 
 			return pub, nil
@@ -75,9 +77,13 @@ var verifyCmd = &cobra.Command{
 			default:
 				fmt.Println("cannot handle this token:", err)
 			}
+			return err
 		} else {
 			fmt.Println("cannot handle this token:", err)
+			return err
 		}
+
+		return nil
 	},
 }
 

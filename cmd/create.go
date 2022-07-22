@@ -44,13 +44,13 @@ var createCmd = &cobra.Command{
 
 		payload, err := os.ReadFile(claimFile)
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("%v", err)
 			return err
 		}
 
 		privateKey, err := os.ReadFile(privateKeyFile)
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("%v", err)
 			return err
 		}
 
@@ -58,9 +58,10 @@ var createCmd = &cobra.Command{
 		if err != nil {
 			fmt.Printf("failed to create token")
 			return err
-		} else {
-			fmt.Printf("%s\n", token)
 		}
+
+		fmt.Printf("%s\n", token)
+
 		return nil
 	},
 }
