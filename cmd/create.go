@@ -37,7 +37,7 @@ var createCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Generate JWT token with custom claims",
 	Long:  `Generate JWT token with custom claims. Private key support: RSA private key`,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		vip := vipers["create"]
 		claimFile := vip.GetString("claims")
 		privateKeyFile := vip.GetString("privkey")
@@ -45,19 +45,23 @@ var createCmd = &cobra.Command{
 		payload, err := os.ReadFile(claimFile)
 		if err != nil {
 			log.Fatal(err)
+			return err
 		}
 
 		privateKey, err := os.ReadFile(privateKeyFile)
 		if err != nil {
 			log.Fatal(err)
+			return err
 		}
 
 		token, err := JwtToken(payload, privateKey)
 		if err != nil {
 			fmt.Printf("failed to create token")
+			return err
 		} else {
 			fmt.Printf("%s\n", token)
 		}
+		return nil
 	},
 }
 
